@@ -2,7 +2,7 @@
 
 ### 1. RPC 框架整体设计
 
-![img.png](img.png)
+![img.png](images/img.png)
 
 - Proxy: 代理模式，实现调用者和服务提供者（provider）的解耦，无需关注其中对参数的封装、路由的实现
 - Router: 定义规则去匹配 provider 服务，由注册中心来辅助
