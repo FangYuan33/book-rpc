@@ -9,8 +9,8 @@
         <version>1.0</version>
     </parent>
 
-    <groupId>book.rpc.interface</groupId>
-    <artifactId>rpc-interface</artifactId>
+    <groupId>book.rpc.interfaces</groupId>
+    <artifactId>rpc-interfaces</artifactId>
 
 
 </project>

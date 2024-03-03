@@ -11,7 +11,7 @@
 
     <modules>
         <module>rpc-core</module>
-        <module>rpc-interface</module>
+        <module>rpc-interfaces</module>
     </modules>
 
     <description>造RPC轮子</description>

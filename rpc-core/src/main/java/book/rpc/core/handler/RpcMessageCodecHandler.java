@@ -1,11 +1,14 @@
 package book.rpc.core.handler;
 
+import book.rpc.core.common.Constant;
 import book.rpc.core.protocol.Message;
+import com.alibaba.fastjson.JSONObject;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageCodec;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -18,13 +21,18 @@ import java.util.List;
 public class RpcMessageCodecHandler extends MessageToMessageCodec<ByteBuf, Message> {
 
     protected void encode(ChannelHandlerContext channelHandlerContext, Message message, List<Object> list) throws Exception {
-
+        ByteBuf byteBuf = channelHandlerContext.alloc().buffer();
+        byte[] content = JSONObject.toJSONString(message).getBytes();
+        byteBuf.writeInt(Constant.MAGIC_NUMBER);
+        byteBuf.writeInt(content.length);
+        byteBuf.writeBytes(content);
+        list.add(byteBuf);
     }
 
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) throws Exception {
         int magicNumber = byteBuf.readInt();
         // 魔数不对，关闭连接
-        if (Message.MAGIC_NUMBER != magicNumber) {
+        if (Constant.MAGIC_NUMBER != magicNumber) {
             channelHandlerContext.close();
             return;
         }
@@ -34,27 +42,8 @@ public class RpcMessageCodecHandler extends MessageToMessageCodec<ByteBuf, Messa
         // 创建数据内容字节数组
         byte[] content = new byte[contentLength];
         byteBuf.readBytes(content);
-        // 解析成消息
-        Message message = new Message(content);
+        Message message = JSONObject.parseObject(Arrays.toString(content), Message.class);
         list.add(message);
     }
 
-    /**
-     * 获取消息字节长度
-     */
-    private Integer getMessageBodyLength(ByteBuf byteBuf) {
-        if (hasLength(byteBuf, Integer.BYTES)) {
-            // 读取魔数后的消息长度
-            return byteBuf.getInt(Integer.BYTES);
-        }
-
-        return null;
-    }
-
-    /**
-     * 校验字节流是否包含字段信息
-     */
-    private boolean hasLength(ByteBuf byteBuf, int fieldLength) {
-        return byteBuf.readableBytes() >= fieldLength;
-    }
 }

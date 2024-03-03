@@ -47,8 +47,8 @@
         </dependency>
 
         <dependency>
-            <groupId>book.rpc.interface</groupId>
-            <artifactId>rpc-interface</artifactId>
+            <groupId>book.rpc.interfaces</groupId>
+            <artifactId>rpc-interfaces</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>

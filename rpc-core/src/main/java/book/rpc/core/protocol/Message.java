@@ -6,24 +6,28 @@ import java.io.Serializable;
 
 /**
  * PRC 消息
+ * <p>
+ * 消息格式：
+ * +-----------------------+------------+----------+
+ * | MAGIC_NUMBER(4 bytes) | contentLength(4 bytes) | content(n bytes) |
+ * +-----------------------+------------+----------+
+ * <p>
+ * 通讯时会将 Message 对象转换成JSON串，其中 contentLength 表示JSON串字节数组长度
  *
  * @author FangYuan
  * @since 2024-02-29 21:11:46
  */
 @Data
-public class Message implements Serializable {
+public class Message {
 
-    private static final long serialVersionUID = 5359096060555795690L;
+    private String targetMethod;
 
-    public static final Integer MAGIC_NUMBER = 20240229;
+    private String targetServiceName;
 
-    private int contentLength;
+    private Object[] args;
 
-    private byte[] content;
+    private String uuid;
 
-    public Message(byte[] content) {
-        this.content = content;
-        this.contentLength = content.length;
-    }
+    private Object response;
 
 }
