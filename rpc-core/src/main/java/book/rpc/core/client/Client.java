@@ -32,7 +32,9 @@ public class Client {
 
             RpcReference rpcReference = new RpcReference();
             DataService dataService = rpcReference.get(DataService.class);
-            dataService.test("RPC!");
+            String res = dataService.test("RPC!");
+
+            log.info("响应结果为：{}", res);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (Throwable e) {

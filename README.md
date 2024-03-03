@@ -10,6 +10,14 @@
 - FilterChain: 可插拔组件
 - Tolerant: 容错机制
 
+#### 初版实现
+
+![](images/RPC框架初版.png)
+
+- Serialize: book.rpc.core.protocol.Message 注释中定义了协议的规则，关注其中字段注释即可；book.rpc.core.handler.RpcMessageCodecHandler 是根据解析解析的逻辑，比较简单
+- Proxy: 采用的是 JDK 动态代理实现
+- Router: 已经指定好了服务端IP和端口，服务端对接口的实现放在了缓存中
+
 **写完的话，看看 DUBBO 的代理层怎么实现的？**
 
 ---

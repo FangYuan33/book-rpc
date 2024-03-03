@@ -1,6 +1,9 @@
 # Compiled class file
 *.class
 
+*.bkp
+*.dtmp
+
 # Log file
 *.log
 

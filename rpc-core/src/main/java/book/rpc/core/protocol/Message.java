@@ -20,14 +20,29 @@ import java.io.Serializable;
 @Data
 public class Message {
 
-    private String targetMethod;
-
+    /**
+     * 要找的接口名称
+     */
     private String targetServiceName;
 
+    /**
+     * 该接口中的方法
+     */
+    private String targetMethod;
+
+    /**
+     * 调用方法的参数
+     */
     private Object[] args;
 
+    /**
+     * UUID 异步交互，用于对应请求和响应的结果
+     */
     private String uuid;
 
+    /**
+     * 服务端的响应（如果有）
+     */
     private Object response;
 
 }
