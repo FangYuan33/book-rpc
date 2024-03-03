@@ -8,6 +8,7 @@
         <artifactId>book-rpc</artifactId>
         <version>1.0</version>
     </parent>
+    <packaging>jar</packaging>
 
     <groupId>book.rpc.interfaces</groupId>
     <artifactId>rpc-interfaces</artifactId>

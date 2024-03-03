@@ -1,6 +1,8 @@
 package book.rpc.core.proxy;
 
 import book.rpc.core.protocol.Message;
+import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -16,6 +18,7 @@ import static book.rpc.core.common.CommonCacheService.SEND_QUEUE;
  * @author FangYuan
  * @since 2024-03-03 18:11:12
  */
+@Slf4j
 public class JDKClientInvocationHandler implements InvocationHandler {
 
     // 默认返回值对象
@@ -38,6 +41,7 @@ public class JDKClientInvocationHandler implements InvocationHandler {
 
         // 放入发送队列准备发送消息
         SEND_QUEUE.add(message);
+        log.info("客户端调用发送消息：{}", JSONObject.toJSONString(message));
         // map 中保存UUID 映射返回结果
         RESP_MAP.put(message.getUuid(), OBJECT);
         // 3 秒内等待返回结果
@@ -45,6 +49,7 @@ public class JDKClientInvocationHandler implements InvocationHandler {
         while (System.currentTimeMillis() - cur < 3 * 1000) {
             Object object = RESP_MAP.get(message.getUuid());
             if (object instanceof Message) {
+                log.info("响应结果：{}", JSONObject.toJSONString(object));
                 return ((Message) object).getResponse();
             }
         }

@@ -42,7 +42,7 @@ public class RpcMessageCodecHandler extends MessageToMessageCodec<ByteBuf, Messa
         // 创建数据内容字节数组
         byte[] content = new byte[contentLength];
         byteBuf.readBytes(content);
-        Message message = JSONObject.parseObject(Arrays.toString(content), Message.class);
+        Message message = JSONObject.parseObject(new String(content), Message.class);
         list.add(message);
     }
 
